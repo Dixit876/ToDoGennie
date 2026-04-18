@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: todogenie
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.13"
+      - key: PORT
+        value: "10000"

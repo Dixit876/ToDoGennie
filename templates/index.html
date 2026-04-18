@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ToDoGenie — Smart Task Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="noise"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">✦</span>
+        <span class="logo-text">ToDoGenie</span>
+        <span class="logo-badge">AI</span>
+      </div>
+      <div class="header-meta">
+        <span id="clock" class="clock"></span>
+        <div class="sort-group">
+          <label>Sort by</label>
+          <select id="sortSelect" onchange="loadTasks()">
+            <option value="priority">Priority</option>
+            <option value="deadline">Deadline</option>
+            <option value="difficulty">Difficulty</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main class="main-grid">
+    <aside class="panel panel-left">
+      <section class="card form-card">
+        <div class="card-header">
+          <h2>New Task</h2>
+          <span class="card-tag">+ Add</span>
+        </div>
+
+        <div class="form-body">
+          <div class="field">
+            <label for="taskTitle">Task Title</label>
+            <input type="text" id="taskTitle" placeholder="What needs to be done?" />
+          </div>
+
+          <div class="field">
+            <label for="taskDeadline">Deadline</label>
+            <input type="datetime-local" id="taskDeadline" />
+          </div>
+
+          <div class="field">
+            <label>Difficulty <span id="diffLabel" class="diff-value">3</span>/5</label>
+            <div class="slider-wrap">
+              <input type="range" id="taskDifficulty" min="1" max="5" value="3"
+                     oninput="document.getElementById('diffLabel').textContent=this.value" />
+              <div class="slider-dots">
+                <span>Easy</span><span>Hard</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="taskRemark">Notes (optional)</label>
+            <textarea id="taskRemark" rows="2" placeholder="Any extra details…"></textarea>
+          </div>
+
+          <button id="addTaskBtn" class="btn-primary" onclick="addTask()">
+            <span class="btn-icon">⚡</span> Add Task
+          </button>
+        </div>
+      </section>
+      <section class="card next-card" id="nextCard">
+        <div class="card-header">
+          <h2>Genie Says…</h2>
+          <span class="card-tag">AI Pick</span>
+        </div>
+        <div id="nextTaskContent" class="next-content">
+          <p class="empty-hint">Add tasks to get a recommendation.</p>
+        </div>
+      </section>
+      <section class="card stats-card">
+        <div class="stat">
+          <span class="stat-num" id="statTotal">0</span>
+          <span class="stat-lbl">Total</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num" id="statDone">0</span>
+          <span class="stat-lbl">Done</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num" id="statLeft">0</span>
+          <span class="stat-lbl">Left</span>
+        </div>
+      </section>
+
+    </aside>
+    <section class="panel panel-right">
+
+      <div class="tasks-header">
+        <h2>All Tasks</h2>
+        <div class="filter-pills">
+          <button class="pill active" data-filter="all" onclick="setFilter('all',this)">All</button>
+          <button class="pill" data-filter="pending" onclick="setFilter('pending',this)">Pending</button>
+          <button class="pill" data-filter="done" onclick="setFilter('done',this)">Done</button>
+        </div>
+      </div>
+
+      <div id="taskList" class="task-list">
+        <div class="loading-state">
+          <div class="spinner"></div>
+          <p>Loading tasks…</p>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+  <canvas id="confettiCanvas"></canvas>
+  <div id="cheerModal" class="modal-backdrop hidden">
+    <div class="modal-box">
+      <div class="cheer-emoji" id="cheerEmoji">🎉</div>
+      <h3 id="cheerTitle">Task Crushed!</h3>
+      <p id="cheerMsg">You're on a roll — keep going!</p>
+      <button class="btn-primary" onclick="closeCheer()">Keep Going →</button>
+    </div>
+  </div>
+  <div id="alertBanner" class="alert-banner hidden">
+    <span class="alert-icon">🔔</span>
+    <span id="alertMsg">A task deadline is approaching!</span>
+    <button onclick="dismissAlert()">✕</button>
+  </div>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
