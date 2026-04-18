@@ -146,7 +146,7 @@ http://localhost:5000
 - Author
 
 Dixit
-🎓 B.Tech CSE (AI), Chitkara University
+B.Tech CSE (AI), Chitkara University
 
 * GitHub: https://github.com/Dixit876
 * LinkedIn: ADD_YOUR_LINKEDIN
